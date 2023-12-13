@@ -26,7 +26,7 @@ const NavbarHome = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("https://beehubvas.com/verifylogin").then((res) => {
+    Axios.get("https://dape-beehub-va-api.onrender.com/verifylogin").then((res) => {
       try {
         if (res.data !== "User not found") {
           console.log(res.data);

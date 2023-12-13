@@ -95,7 +95,7 @@ const JoinRegister = () => {
         formData.append("selectedValues", selectedValues);
 
         try {
-          await Axios.post("https://beehubvas.com/joinRegister", formData);
+          await Axios.post("https://dape-beehub-va-api.onrender.com/joinRegister", formData);
 
           navigate("/login");
         } catch (error) {

@@ -12,7 +12,7 @@ const EmailVerify = () => {
 
   useEffect(() => {
     const verifyEmailUrl = async () => {
-      const url = `https://beehubvas.com/verify/${param.id}/${param.token}`;
+      const url = `https://dape-beehub-va-api.onrender.com/verify/${param.id}/${param.token}`;
       const data = await Axios.get(url);
 
       if (data.status === 200) {

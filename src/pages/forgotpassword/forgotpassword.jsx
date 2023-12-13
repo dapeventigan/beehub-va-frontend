@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     const verifyEmailUrl = async () => {
       setUserID(param.id);
       try {
-        const url = `https://beehubvas.com/reset/${param.id}/${param.token}`;
+        const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
         const data = await Axios.get(url);
         console.log(data);
         if(data.data.message === "nah"){
@@ -67,7 +67,7 @@ const ForgotPassword = () => {
 
         formData.append("password", newPassword);
         formData.append("userID", userID);
-        await Axios.post("https://beehubvas.com/resetPassword", formData, {
+        await Axios.post("https://dape-beehub-va-api.onrender.com/resetPassword", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }).then(navigate("/login"));
       } catch (error) {

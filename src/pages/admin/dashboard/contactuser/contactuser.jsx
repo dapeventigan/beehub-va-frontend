@@ -45,7 +45,7 @@ export default function ContactUser({ userID }) {
     window.location.reload();
 
     try {
-      await Axios.post("https://beehubvas.com/contactMessage", {
+      await Axios.post("https://dape-beehub-va-api.onrender.com/contactMessage", {
         id: userUUID,
         email: email,
         message: emailMessage,
@@ -59,7 +59,7 @@ export default function ContactUser({ userID }) {
   };
 
   useEffect(() => {
-    Axios.get("https://beehubvas.com/getSpecificUser", {
+    Axios.get("https://dape-beehub-va-api.onrender.com/getSpecificUser", {
       params: { userID: userUUID },
     }).then((res) => {
       try {
