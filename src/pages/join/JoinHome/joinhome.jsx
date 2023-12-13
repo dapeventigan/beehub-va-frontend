@@ -9,7 +9,7 @@ const JoinHome = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("http://localhost:3001/joinuserdashboard").then((res) => {
+    Axios.get("https://beehubvas.com/joinuserdashboard").then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
       } else {

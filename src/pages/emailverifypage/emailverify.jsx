@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
+import BeeAbout from "../../assets/bee__about.png";
+import "./emailverify.css";
 
 const EmailVerify = () => {
-  const [validUrl, setValidUrl] = useState(true);
+  const [validUrl, setValidUrl] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const param = useParams();
   console.log(validUrl);
 
   useEffect(() => {
     const verifyEmailUrl = async () => {
-      const url = `http://localhost:3001/verify/${param.id}/${param.token}`;
+      const url = `https://beehubvas.com/verify/${param.id}/${param.token}`;
       const data = await Axios.get(url);
 
       if (data.status === 200) {
@@ -30,26 +32,31 @@ const EmailVerify = () => {
     return () => clearTimeout(redirectTimer);
   }, [param, validUrl]);
 
-  return (
+  return validUrl ? (
     <div className="container emailverify__container">
-      <div className="main__container">
-        {validUrl ? (
-          <>
-            <div className="message__container">
-              <h1>
-                Your email has been verified! Welcome to BeeHub Virtual
-                Assistant!
-              </h1>
-            </div>
-            <p>Redirecting to the login page in 5 seconds...</p>
-          </>
-        ) : (
-          <>
-            <h1>{errorMsg}</h1>
-            <p>Redirecting to the login page in 5 seconds...</p>
-          </>
-        )}
+      <div className="emailverifymain__container">
+        <div className="welcomemessage__container">
+          <div className="about__beeimg">
+            <img className="bee__verify" src={BeeAbout} alt="" />
+          </div>
+          <h2>Your email has been verified!</h2>
+          <h1>
+            Welcome to
+            <span className="build__text">BeeHub Virtual Assistant!</span>
+          </h1>
+        </div>
+        <p>Redirecting to the login page in 5 seconds...</p>
       </div>
+    </div>
+  ) : (
+    <div className="emailverifymain__container">
+      <div className="welcomemessage__container">
+        <div className="about__beeimg">
+          <img className="bee__verify" src={BeeAbout} alt="" />
+        </div>
+        <h3>{errorMsg}</h3>
+      </div>
+      <p>Redirecting to the login page in 5 seconds...</p>
     </div>
   );
 };

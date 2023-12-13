@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Button, Menu, MenuItem } from "@mui/material";
+import { useNavigate, Link } from "react-router-dom";
 import Axios from "axios";
-import vaLogo from "../../../assets/logo_sample.png";
+import vaLogo from "../../../assets/navlogo.png";
 import { FaBars } from "react-icons/fa";
 import { MdOutlineClose } from "react-icons/md";
 import { links } from "../../../assets/data";
-import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import "./navbar.css";
 
 const NavbarHome = () => {
-  const [isNavOpen, setisNavOpen] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [loginLocation, setLoginLocation] = useState("");
   const navigate = useNavigate();
 
-  console.log(userDetails);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("http://localhost:3001/verifylogin").then((res) => {
+    Axios.get("https://beehubvas.com/verifylogin").then((res) => {
       try {
         if (res.data !== "User not found") {
           console.log(res.data);
@@ -57,23 +62,16 @@ const NavbarHome = () => {
       <div className="container navbar__container">
         <div className="navbar__contents">
           <div className="navbar__logo">
-            <a href="#header" onClick={() => setisNavOpen(false)}>
+            <a href="/">
               <img src={vaLogo} alt="" />
             </a>
           </div>
           <div className="navbar__link">
-            <ul
-              className={`navbar__links ${
-                isNavOpen ? "show__nav" : "hide__nav"
-              }`}
-            >
+            <ul className="navbar__links">
               {links.map(({ name, path }, index) => {
                 return (
                   <li key={index}>
-                    <a
-                      href={path}
-                      onClick={() => setisNavOpen((prev) => !prev)}
-                    >
+                    <a className="link__details" href={path}>
                       {name}
                     </a>
                   </li>
@@ -81,24 +79,52 @@ const NavbarHome = () => {
               })}
             </ul>
           </div>
-          {isUserLoggedIn ? (
-            <Link to={loginLocation} className="btn btn-primary">
-              Logged In
-            </Link>
-          ) : (
-            <div className="navbar__button">
-              <Link to="/login" className="btn btn-primary">
+
+          <div className="simple__menu">
+            <Button
+              sx={{
+                color: "#fff",
+                border: "2px solid #fff",
+                "&:hover": {
+                  border: "1px solid #ffd325",
+                },
+              }}
+              variant="outlined"
+              aria-controls="simple__menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              {anchorEl ? <MdOutlineClose /> : <FaBars />}
+            </Button>
+            <Menu
+              id="simple__menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {links.map(({ name, path }, index) => {
+                return (
+                  <a key={index} href={path}>
+                    <MenuItem className="link__details" onClick={handleClose}>
+                      {name}
+                    </MenuItem>
+                  </a>
+                );
+              })}
+            </Menu>
+          </div>
+          <div className="button__login">
+            {isUserLoggedIn ? (
+              <Link to={loginLocation} className="button btn-login">
+                Coming Soon
+              </Link>
+            ) : (
+              <Link to="/login" className="button btn-login">
                 Login
               </Link>
-            </div>
-          )}
-
-          <button
-            className="btn__bars"
-            onClick={() => setisNavOpen((prev) => !prev)}
-          >
-            {isNavOpen ? <MdOutlineClose /> : <FaBars />}
-          </button>
+            )}
+          </div>
         </div>
       </div>
     </nav>

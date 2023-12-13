@@ -2,20 +2,50 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import Cookies from "js-cookie";
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
+import vaLogo from "../../../assets/navlogo.png";
+import { FaArrowLeft } from "react-icons/fa";
 
 import ContactUser from "./contactuser/contactuser";
 import ViewPdf from "./viewpdf";
+import "./dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [applyUsers, setApplyUsers] = useState([]);
   const [joinUsers, setJoinUsers] = useState([]);
+  const [archiveUsers, setArchiveUsers] = useState([]);
+
+  createTheme(
+    "dape",
+    {
+      text: {
+        primary: "black",
+        secondary: "black",
+      },
+      background: {
+        default: "#E99E00",
+      },
+      context: {
+        background: "#cb4b16",
+        text: "#FFFFFF",
+      },
+      divider: {
+        default: "#3F404F",
+      },
+      action: {
+        button: "rgba(0,0,0,.54)",
+        hover: "rgba(0,0,0,.08)",
+        disabled: "rgba(0,0,0,.12)",
+      },
+    },
+    "dark"
+  );
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("http://localhost:3001/admindashboard").then((res) => {
+    Axios.get("https://beehubvas.com/admindashboard").then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
       } else {
@@ -23,7 +53,7 @@ const Dashboard = () => {
       }
     });
 
-    Axios.get("http://localhost:3001/getApplyUsers").then((res) => {
+    Axios.get("https://beehubvas.com/getApplyUsers").then((res) => {
       try {
         setApplyUsers(res.data);
       } catch (error) {
@@ -31,9 +61,17 @@ const Dashboard = () => {
       }
     });
 
-    Axios.get("http://localhost:3001/getJoinUsers").then((res) => {
+    Axios.get("https://beehubvas.com/getJoinUsers").then((res) => {
       try {
         setJoinUsers(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    Axios.get("https://beehubvas.com/getArchiveUsers").then((res) => {
+      try {
+        setArchiveUsers(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -62,11 +100,11 @@ const Dashboard = () => {
     },
     {
       name: "View Resume",
-      selector: (row) => <ViewPdf filename={row.pdfFile}/>,
+      selector: (row) => <ViewPdf filename={row.pdfFile} />,
     },
     {
       name: "Contact",
-      selector: (row) => <ContactUser userID={row._id}/>,
+      selector: (row) => <ContactUser userID={row._id} />,
     },
   ];
 
@@ -96,42 +134,107 @@ const Dashboard = () => {
     },
   ];
 
+  const arhivedcolumns = [
+    {
+      name: "Name",
+      selector: (row) => row.fname + " " + row.mname + " " + row.lname,
+      sortable: true,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
+    },
+    {
+      name: "Location",
+      selector: (row) => row.cityName + ", " + row.stateName,
+      sortable: true,
+    },
+    {
+      name: "Looking for",
+      selector: (row) => row.selectedValues,
+    },
+    {
+      name: "Previous Role",
+      selector: (row) => (row.role === "applyUser" ? "Applied" : "Joined"),
+    },
+  ];
+
   const handleLogout = (e) => {
     e.preventDefault();
 
     Cookies.remove("token");
-    window.location.reload();
     navigate("/");
   };
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-      {userDetails && (
-        <div>
-          <p>Email: {userDetails.email}</p>
-          <p>
-            Full Name:{" "}
-            {`${userDetails.fname} ${userDetails.mname} ${userDetails.lname}`}
-          </p>
-          <p>City: {userDetails.cityName}</p>
-        </div>
-      )}
+    <div className="dashboard-container">
+      <div className="admindashbody__container">
+        <div className="admindash__container">
+          <div className="admindashheader__container">
+            <div className="adminflex__container">
+              <div className="goback__container">
+                <a href="/">
+                  <button className="goback__button">
+                    <FaArrowLeft className="goback__icon" />
+                    <span className="goback__text">Go back</span>
+                  </button>
+                </a>
+              </div>
+              {userDetails && (
+                <div className="dashheader__container">
+                  <h1>Admin Dashboard</h1>
+                  <p>
+                    Hello {userDetails.fname} {userDetails.lname} , you are
+                    logged in using {userDetails.email}.
+                  </p>
+                  <p>
+                    {" "}
+                    Welcome to BeeHub's Admin Dashboard. If you need any help,
+                    please click the bee on the bottom right.
+                  </p>
+                </div>
+              )}
+            </div>
 
-      <button onClick={handleLogout}>Logout</button>
+            <div className="goback__container">
+              <button className="goback__button" onClick={handleLogout}>
+                <span className="goback__text">Logout</span>
+              </button>
+            </div>
+          </div>
 
-      <div className="datatable__container">
-        <h1>Apply Users</h1>
-        <div className="table__container">
-          <DataTable columns={applycolumns} data={applyUsers} />
+          <div className="datatable__container">
+            <h1>Apply Users</h1>
+            <div className="table__container">
+              <DataTable
+                columns={applycolumns}
+                data={applyUsers}
+                theme="dape"
+              />
+            </div>
+          </div>
+
+          <div className="datatable__container">
+            <h1>Join Users</h1>
+            <div className="table__container">
+              <DataTable columns={joincolumns} data={joinUsers} theme="dape" />
+            </div>
+          </div>
+
+          <div className="datatable__container">
+            <h1>Archive Users</h1>
+            <div className="table__container">
+              <DataTable columns={arhivedcolumns} data={archiveUsers} theme="dape" />
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="datatable__container">
-        <h1>Join Users</h1>
-        <div className="table__container">
-          <DataTable columns={joincolumns} data={joinUsers} />
-        </div>
+      <div className="sticky__button">
+      <a href="https://m.me/trashdape" target="_blank" rel="noreferrer">
+        <img src={vaLogo} alt="" />
+        </a>
       </div>
     </div>
   );

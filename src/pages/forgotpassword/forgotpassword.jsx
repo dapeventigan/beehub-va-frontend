@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FaArrowLeft } from "react-icons/fa";
+import "./forgotpassword.css";
 
 const ForgotPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -12,7 +14,6 @@ const ForgotPassword = () => {
   const [validUrl, setValidUrl] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
-  console.log(validUrl)
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -23,7 +24,7 @@ const ForgotPassword = () => {
     const verifyEmailUrl = async () => {
       setUserID(param.id);
       try {
-        const url = `http://localhost:3001/reset/${param.id}/${param.token}`;
+        const url = `https://beehubvas.com/reset/${param.id}/${param.token}`;
         const data = await Axios.get(url);
         console.log(data);
         if(data.data.message === "nah"){
@@ -31,7 +32,7 @@ const ForgotPassword = () => {
         }else{
           setValidUrl(true);
         }
- 
+
       } catch (error) {
         console.log(error);
         setValidUrl(false);
@@ -66,10 +67,9 @@ const ForgotPassword = () => {
 
         formData.append("password", newPassword);
         formData.append("userID", userID);
-        await Axios.post("http://localhost:3001/resetPassword", formData, {
+        await Axios.post("https://beehubvas.com/resetPassword", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }).then(navigate("/login"));
-
       } catch (error) {
         setMessage(error.message);
       }
@@ -77,54 +77,86 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="container forgotpassword__container">
-      <div className="main__container">
-        {validUrl ?   <div className="form__container">
-          <h1>Reset your password</h1>
-          <form onSubmit={handleResetPassword}>
-            <div className="input__container">
-              <label htmlFor="password">
-                <strong>Password</strong>
-              </label>
-              <div className="password__container">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  name="password"
-                  required
-                />
-              </div>
+    <>
+      {validUrl ? (
+        <div className="login__container">
+          <div className="loginmain__container">
+            <div className="loginform__container">
+              <form onSubmit={handleResetPassword}>
+                <div className="logininsideform__container">
+                  <h1>Reset your password</h1>
+                  <div className="logininput__container">
+                    <label htmlFor="password">
+                      <strong>Enter New Password</strong>
+                    </label>
+                    <div className="loginpassword__container">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        name="password"
+                        placeholder="Enter New Password"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="logininput__container">
+                    <label htmlFor="password">
+                      <strong>Password</strong>
+                    </label>
+                    <div className="loginpassword__container">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        name="password"
+                        placeholder="Verify Password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="password-toggle"
+                      >
+                        {showPassword ? (
+                          <AiOutlineEye />
+                        ) : (
+                          <AiOutlineEyeInvisible />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  {message}
+                  <div className="loginbutton__container">
+                    <Link to="/" className="btn btn-primary">
+                      Cancel
+                    </Link>
+                    <button className="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div className="input__container">
-              <label htmlFor="password">
-                <strong>Password</strong>
-              </label>
-              <div className="password__container">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  name="password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  className="password-toggle"
-                >
-                  {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
-                </button>
-              </div>
-            </div>
-            {message}
-            <button>Cancel</button>
-            <button>Submit</button>
-          </form>
-        </div> : <h1>basta aayusin ko front enmd</h1>}
-      
-      </div>
-    </div>
+          </div>
+        </div>
+      ) : (
+        <div className="error__container">
+          <div className="vaback__container">
+            <a href="/">
+              <button className="goback__button">
+                <FaArrowLeft className="goback__icon" />
+                <span className="goback__text">Go back</span>
+              </button>
+            </a>
+          </div>
+          <h1 className="error__title">
+            Link is broken or already expired. Please try again.
+          </h1>
+          <h2 className="error__subtitle">
+            Please contact Technical Support if you're still experiencing this.
+          </h2>
+        </div>
+      )}
+    </>
   );
 };
 

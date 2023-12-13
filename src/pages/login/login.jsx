@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("http://localhost:3001/login", {
+      await Axios.post("https://beehubvas.com/login", {
         email,
         password,
       }).then((res) => {
@@ -49,18 +49,18 @@ const Login = () => {
   };
 
   return (
-    <div className="container login__container">
-      <div className="main__container">
-        <div className="form__container">
+    <div className="login__container">
+      <div className="loginmain__container">
+        <div className="loginform__container">
           <form onSubmit={handleLogin}>
-            <div className="insideform__container">
-              <h2>Login</h2>
-              <div className="input__container">
+            <div className="logininsideform__container">
+              <h2>Login to Beehub</h2>
+              <div className="logininput__container">
                 <label htmlFor="email">
                   <strong>Email</strong>
                 </label>
                 <input
-                  className="input__form"
+                  className="logininput__form"
                   type="email"
                   placeholder="Enter Email"
                   name="email"
@@ -69,11 +69,11 @@ const Login = () => {
                 />
               </div>
 
-              <div className="input__container">
+              <div className="logininput__container">
                 <label htmlFor="password">
                   <strong>Password</strong>
                 </label>
-                <div className="password__container">
+                <div className="loginpassword__container">
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -96,11 +96,16 @@ const Login = () => {
                 </div>
               </div>
               <div className="forgotpassword__container">
-                <Link to="/resetpasswordverify">Forgot Password</Link>
+                <Link to="/resetpasswordverify" className="forgot__password">
+                  Forgot Password
+                </Link>
               </div>
               {error && <div>{error}</div>}
-              <div className="button__container">
-                <button>Login</button>
+              <div className="loginbutton__container">
+                <Link to="/" className="btn btn-primary">
+                  Cancel
+                </Link>
+                <button className="btn btn-primary">Login</button>
               </div>
             </div>
           </form>

@@ -9,7 +9,7 @@ const ApplyHome = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("http://localhost:3001/applyuserdashboard").then((res) => {
+    Axios.get("https://beehubvas.com/applyuserdashboard").then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
       } else {

@@ -11,8 +11,8 @@ export const links = [
     },
 
     {
-        name: "FAQs",
-        path: '#faqs'
+        name: "Virtual Assistant",
+        path: '/virtual-assistant'
     },
     {
         name: "Contact Us",

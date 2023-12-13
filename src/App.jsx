@@ -3,12 +3,13 @@ import LandingPage from "./pages/landingpage/landingpage.jsx";
 import Login from "./pages/login/login.jsx";
 import Dashboard from "./pages/admin/dashboard/dashboard.jsx";
 import EmailVerify from "./pages/emailverifypage/emailverify.jsx";
+import VirtualAssistance from "./pages/virtual/virtual-assistance.jsx";
 
 //APPLY ROUTES
-import ApplyRegister from "./pages/apply/ApplyRegister/register.jsx";
+import ApplyRegister from "./pages/apply/ApplyRegister/applyregister.jsx";
 import ApplyHome from "./pages/apply/ApplyHome/applyhome.jsx";
 //JOIN ROUTES
-import JoinRegister from "./pages/join/JoinRegister/register.jsx";
+import JoinRegister from "./pages/join/JoinRegister/joinregister.jsx";
 import JoinHome from "./pages/join/JoinHome/joinhome.jsx";
 //FORGOT PASSWORD
 import CheckEmail from "./pages/forgotpassword/checkemail.jsx";
@@ -31,7 +32,7 @@ function App() {
           <Route path="/resetpasswordverify" element={<CheckEmail />} />
           <Route path="/verify/:id/:token" element={<EmailVerify/>}/>
           <Route path="/reset/:id/:token" element={<ForgotPassword/>}/>
-
+          <Route path="/virtual-assistant" element={<VirtualAssistance/>}/>
         </Routes>
       </BrowserRouter>
     </>

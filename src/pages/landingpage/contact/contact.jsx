@@ -2,23 +2,25 @@ import React from "react";
 import { ImLocation } from "react-icons/im";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GrMail } from "react-icons/gr";
-import PhoneImage from '../../../assets/phone.png'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import './contact.css'
+import "./contact.css";
 
 const Contact = () => {
   return (
     <section id="contact">
       <div className="container contact__container">
-        <div className="contact__card">
-          <h2>Contact Us</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-            porro quo tempora sunt, deleniti eum sequi dolorum ullam consectetur
-            atque.
-          </p>
+        <div className="contact__title">
+          <h2>
+            LET'S <span className="build__text"> BUILD</span> YOUR BUSINESS
+            TOGETHER
+          </h2>
+          <h1>
+            Contact <span className="build__text">Beehub</span>
+          </h1>
+        </div>
 
+        <div className="contact__card">
           <div className="contact__details">
             <div className="contact__info">
               <ImLocation className="contact__icon" />
@@ -35,16 +37,13 @@ const Contact = () => {
               <h3>Email: </h3>
               <h4>sample.email@gmail.com </h4>
             </div>
-            
+
             <div className="contact__button">
-              <Link to="/joinregister" className="ased">
+              <Link to="/joinregister" className="join__button">
                 Join Us
               </Link>
             </div>
           </div>
-        </div>
-        <div className="phone__image">
-            <img src={PhoneImage} alt="" />
         </div>
       </div>
     </section>

@@ -21,13 +21,32 @@ export default function ContactUser({ userID }) {
   const [emailSubject, setEmailSubject] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
+  const buttonStyle = {
+    backgroundColor: "#111111",
+    color: "white",
+    borderRadius: 1,
+    "&:hover": {
+      backgroundColor: "#202020",
+    },
+  };
+
+  const handleCloseModal = () => {
+    setEmailMessage("");
+    setEmailSubject("");
+    setErrorMsg("");
+    handleClose();
+  };
+
   console.log(errorMsg);
 
   const handleSendEmail = async (e) => {
     e.preventDefault();
+    handleClose();
+    window.location.reload();
 
     try {
-      await Axios.post("http://localhost:3001/contactMessage", {
+      await Axios.post("https://beehubvas.com/contactMessage", {
+        id: userUUID,
         email: email,
         message: emailMessage,
         subject: emailSubject,
@@ -40,7 +59,7 @@ export default function ContactUser({ userID }) {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/getSpecificUser", {
+    Axios.get("https://beehubvas.com/getSpecificUser", {
       params: { userID: userUUID },
     }).then((res) => {
       try {
@@ -54,7 +73,9 @@ export default function ContactUser({ userID }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Contact</Button>
+      <Button sx={buttonStyle} onClick={handleOpen}>
+        Contact
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -65,48 +86,70 @@ export default function ContactUser({ userID }) {
           {user.map((userinfo) => (
             <div className="userdetails__container" key={userinfo._id}>
               <p>
-                Name: {userinfo.fname} {userinfo.mname} {userinfo.lname}
+                Name:{" "}
+                <span className="contactuser__title">
+                  {userinfo.fname} {userinfo.mname} {userinfo.lname}
+                </span>
               </p>
-              <p>Email: {userinfo.email}</p>
+              <p>
+                Email:{" "}
+                <span className="contactuser__title">{userinfo.email}</span>
+              </p>
               <p>
                 Mobile Number:{" "}
-                {userinfo.mobileNumber === "" ? "N/A" : userinfo.mobileNumber}
+                <span className="contactuser__title">
+                  {userinfo.mobileNumber === "" ? "N/A" : userinfo.mobileNumber}
+                </span>
               </p>
               <p>
-                Location: {userinfo.streetAdd}, {userinfo.cityName},{" "}
-                {userinfo.stateName}
+                Location:{" "}
+                <span className="contactuser__title">
+                  {userinfo.streetAdd}, {userinfo.cityName},{" "}
+                  {userinfo.stateName}
+                </span>
               </p>
               <p>
                 {userinfo.role === "applyUser"
                   ? "Applying for: "
                   : "Looking for: "}
-                {userinfo.selectedValues}
+                <span className="contactuser__title">
+                  {userinfo.selectedValues}
+                </span>
               </p>
             </div>
           ))}
-          <form onSubmit={handleSendEmail}>
-            <TextField
-              required
-              id="outlined-required"
-              label="Subject"
-              placeholder="Enter subject here..."
-              onChange={(e) => {
-                setEmailSubject(e.target.value);
-              }}
-            />
 
-            <TextField
-              multiline
-              label="Message"
-              rows={8}
-              fullWidth
-              placeholder="Enter message here..."
-              onChange={(e) => {
-                setEmailMessage(e.target.value);
-              }}
-            />
-            <button>Cancel</button>
-            <button>Submit</button>
+          <form onSubmit={handleSendEmail}>
+            <div className="contant__inputs">
+              <div className="subject__input">
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Subject"
+                  placeholder="Enter subject here..."
+                  onChange={(e) => {
+                    setEmailSubject(e.target.value);
+                  }}
+                />
+              </div>
+
+              <TextField
+                multiline
+                label="Message"
+                rows={8}
+                fullWidth
+                placeholder="Enter message here..."
+                onChange={(e) => {
+                  setEmailMessage(e.target.value);
+                }}
+              />
+            </div>
+            <div className="contactuser__container">
+              <button className="btn btn-primary" onClick={handleCloseModal}>
+                Cancel
+              </button>
+              <button className="btn btn-primary">Submit</button>
+            </div>
           </form>
         </Box>
       </Modal>
