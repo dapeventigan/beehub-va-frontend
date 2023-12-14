@@ -12,9 +12,11 @@ const ForgotPassword = () => {
   const [userID, setUserID] = useState("");
   const [message, setMessage] = useState("");
   const [validUrl, setValidUrl] = useState(false);
+  const [dataValue, setDataValue] = useState([]);
   const param = useParams();
   const navigate = useNavigate();
   console.log("URL STATUS: " + validUrl);
+  console.log("data STATUS: " + dataValue);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -30,6 +32,7 @@ const ForgotPassword = () => {
           const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
           console.log("Request URL:", url);
           const response = await Axios.get(url);
+          setDataValue(response)
         } catch (error) {
           console.error("Fetch Error:", error);
           setValidUrl(false);
@@ -37,11 +40,11 @@ const ForgotPassword = () => {
       };
       fetchData();
 
-      console.log("Entire Response:", response);
+      console.log("Entire Response:", dataValue);
   
-      console.log("Response Data:", response.data);
+      console.log("Response Data:", dataValue.data);
 
-      if (response.data.message === "nah") {
+      if (dataValue.data.message === "nah") {
         setValidUrl(false);
         console.log("Invalid URL");
       } else {
