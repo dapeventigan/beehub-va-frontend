@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userID, setUserID] = useState("");
   const [message, setMessage] = useState("");
-  const [validUrl, setValidUrl] = useState(true);
+  const [validUrl, setValidUrl] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
   console.log("URL STATUS: " + validUrl);
@@ -22,24 +22,20 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    const verifyEmailUrl = async () => {
-      setUserID(param.id);
-      try {
-        const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
-        const data = await Axios.get(url);
-        console.log(data);
-        if (data.data.message === "nah") {
-          setValidUrl(false);
-        } else {
-          setValidUrl(true);
-        }
-      } catch (error) {
-        console.log(error);
+    setUserID(param.id);
+    try {
+      const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
+      const data = Axios.get(url);
+      console.log(data);
+      if (data.data.message === "nah") {
         setValidUrl(false);
+      } else {
+        setValidUrl(true);
       }
-    };
-
-    verifyEmailUrl();
+    } catch (error) {
+      console.log(error);
+      setValidUrl(false);
+    }
   }, [param, validUrl]);
 
   const handleResetPassword = async (e) => {
