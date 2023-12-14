@@ -14,6 +14,7 @@ const ForgotPassword = () => {
   const [validUrl, setValidUrl] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
+  console.log("URL STATUS: " + validUrl);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
