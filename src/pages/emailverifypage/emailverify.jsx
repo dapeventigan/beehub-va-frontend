@@ -16,7 +16,7 @@ const EmailVerify = () => {
         const url = `https://dape-beehub-va-api.onrender.com/verify/${param.id}/${param.token}`;
         const data = await Axios.get(url);
 
-        if (data.status === 200) {
+        if (data.data.message === "Link expired or Invalid token. Please try again by logging in.") {
           setValidUrl(false);
           setErrorMsg(data.data.message);
         } else {
@@ -37,7 +37,7 @@ const EmailVerify = () => {
 
     return () => clearTimeout(redirectTimer);
     
-  }, [param]);
+  }, [param.id, param.token]);
 
   return validUrl ? (
     <div className="container emailverify__container">
