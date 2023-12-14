@@ -12,14 +12,20 @@ const EmailVerify = () => {
 
   useEffect(() => {
     const verifyEmailUrl = async () => {
-      const url = `https://dape-beehub-va-api.onrender.com/verify/${param.id}/${param.token}`;
-      const data = await Axios.get(url);
+      try {
+        const url = `https://dape-beehub-va-api.onrender.com/verify/${param.id}/${param.token}`;
+        const data = await Axios.get(url);
 
-      if (data.status === 200) {
+        if (data.status === 200) {
+          setValidUrl(false);
+          setErrorMsg(data.data.message);
+        } else {
+          setValidUrl(true);
+        }
+        
+      } catch (error) {
+        console.error("Fetch Error:", error);
         setValidUrl(false);
-        setErrorMsg(data.data.message);
-      } else {
-        setValidUrl(true);
       }
     };
 
@@ -30,7 +36,8 @@ const EmailVerify = () => {
     }, 5000);
 
     return () => clearTimeout(redirectTimer);
-  }, [param, validUrl]);
+    
+  }, [param]);
 
   return validUrl ? (
     <div className="container emailverify__container">
