@@ -21,8 +21,9 @@ const ForgotPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  setUserID(param.id);
+
   useEffect(() => {
-    setUserID(param.id);
     console.log("Fetching data...");
     const fetchData = async () => {
       try {
@@ -53,7 +54,7 @@ const ForgotPassword = () => {
     };
 
     fetchData();
-  }, [param]);
+  }, []);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
