@@ -20,7 +20,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <BrowserRouter basename="/app">
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/applyregister" element={<ApplyRegister />} />

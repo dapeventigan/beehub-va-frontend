@@ -154,7 +154,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Administrative Support Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Virtual Assistants</li>
                     <li>Administrative Assistants</li>
                     <li>Data Entry Specialists</li>
@@ -165,7 +165,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Technology and Development:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Remote Developers/Programmers</li>
                     <li>IT Support Specialists</li>
                   </ul>
@@ -174,14 +174,14 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Customer Service and Support:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Customer Support Representatives</li>
                     <li>Technical Support Representatives</li>
                   </ul>
                 </div>
                 <div className="grid__content">
                   <h2 className="list__subtitle">Sales and Marketing:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Sales Representatives</li>
                     <li> Business Development Representatives</li>
                     <li> Digital Marketing Professionals</li>
@@ -191,7 +191,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Education and Training:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Online Teachers/Tutors</li>
                     <li> Course Instructors</li>
                   </ul>
@@ -201,7 +201,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Social Media Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Manage social media accounts</li>
                     <li>Create and schedule social media posts</li>
                     <li>Monitor social media analytics</li>
@@ -210,7 +210,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Healthcare and Wellness:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Telehealth Professionals</li>
                     <li>Online Fitness Instructors</li>
                   </ul>
@@ -218,7 +218,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Legal Virtual Assistants:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Assist with legal research.</li>
                     <li>Prepare legal documents and contracts.</li>
                     <li>Manage communication with clients.</li>
@@ -229,7 +229,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Medical Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Schedule appointments for healthcare professionals.</li>
                     <li>Manage medical records.</li>
                     <li>Handle billing and insurance claims.</li>
@@ -240,7 +240,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     E-commerce Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Manage online product listings.</li>
                     <li> Process orders and handle customer inquiries.</li>
                     <li>Coordinate with suppliers and logistics.</li>
@@ -251,7 +251,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Executive Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>
                       Provide high-level administrative support to executives.
                     </li>
@@ -264,7 +264,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Financial Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Assist with bookkeeping and accounting tasks.</li>
                     <li>Process invoices and manage expenses.</li>
                     <li>Prepare financial reports.</li>
@@ -273,7 +273,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Travel Virtual Assistants:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Plan and book travel arrangements.</li>
                     <li>Coordinate itineraries and accommodations.</li>
                     <li>Handle travel-related paperwork.</li>
@@ -284,7 +284,7 @@ const VirtualAssistance = () => {
                   <h2 className="list__subtitle">
                     Marketing Virtual Assistants:
                   </h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Assist with marketing research.</li>
                     <li>Coordinate marketing campaigns.</li>
                     <li>Manage email marketing and outreach.</li>
@@ -293,7 +293,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">HR Virtual Assistants:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Assist with recruitment and onboarding processes.</li>
                     <li>Manage employee records.</li>
                     <li>Handle HR-related communications.</li>
@@ -310,7 +310,7 @@ const VirtualAssistance = () => {
               <div className="viras__gridlist">
                 <div className="grid__content">
                   <h2 className="list__subtitle">Inbound Customer Support:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>
                       Handling customer inquiries and providing assistance.
                     </li>
@@ -321,7 +321,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Outbound Telemarketing:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>
                       Conducting outbound sales calls to potential customers.
                     </li>
@@ -334,7 +334,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Inbound Sales:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>
                       Taking incoming calls from customers interested in
                       purchasing products or services.
@@ -349,7 +349,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Collections Services:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Contacting customers with overdue payments.</li>
                     <li>Negotiating payment plans or settlements.</li>
                     <li>Managing the collection process.</li>
@@ -358,7 +358,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Technical Support:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>
                       Assisting customers with technical issues related to
                       products or services.
@@ -375,7 +375,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Help Desk Services:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>
                       Providing assistance and support for IT-related issues.
                     </li>
@@ -389,7 +389,7 @@ const VirtualAssistance = () => {
 
                 <div className="grid__content">
                   <h2 className="list__subtitle">Order Processing:</h2>
-                  <ul class="bullet__list">
+                  <ul className="bullet__list">
                     <li>Handling orders placed by customers over the phone.</li>
                     <li>Verifying order details and payment information.</li>
                     <li>Processing and confirming orders.</li>
