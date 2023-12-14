@@ -1,5 +1,6 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./virtual-assistance.css";
 
 const VirtualAssistance = () => {
@@ -8,11 +9,11 @@ const VirtualAssistance = () => {
       <div className="viras__content">
         <div className="reusable__space"></div>
         <div className="vaback__container">
-            <a href="/">
-          <button className="goback__button">
-            <FaArrowLeft className="goback__icon" />
-            <span className="goback__text">Go back</span>
-          </button>
+          <a href="/">
+            <button className="goback__button">
+              <FaArrowLeft className="goback__icon" />
+              <span className="goback__text">Go back</span>
+            </button>
           </a>
         </div>
         <div className="viras__maincontainer">
