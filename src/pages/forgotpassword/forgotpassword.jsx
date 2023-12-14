@@ -7,16 +7,16 @@ import { FaArrowLeft } from "react-icons/fa";
 import "./forgotpassword.css";
 
 const ForgotPassword = () => {
+  window.location.reload();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userID, setUserID] = useState("");
   const [message, setMessage] = useState("");
   const [validUrl, setValidUrl] = useState(false);
-  const [dataValue, setDataValue] = useState([]);
   const param = useParams();
   const navigate = useNavigate();
   console.log("URL STATUS: " + validUrl);
-  console.log("data STATUS: " + dataValue);
+
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
