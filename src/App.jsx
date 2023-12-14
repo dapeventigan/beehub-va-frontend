@@ -22,6 +22,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route index element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/applyregister" element={<ApplyRegister />} />
           <Route path="/joinregister" element={<JoinRegister />} />
@@ -30,9 +31,9 @@ function App() {
           <Route path="/applyhome" element={<ApplyHome />} />
           <Route path="/joinhome" element={<JoinHome />} />
           <Route path="/resetpasswordverify" element={<CheckEmail />} />
-          <Route path="/verify/:id/:token" element={<EmailVerify/>}/>
-          <Route path="/reset/:id/:token" element={<ForgotPassword/>}/>
-          <Route path="/virtualassistant" element={<VirtualAssistance/>}/>
+          <Route path="/verify/:id/:token" element={<EmailVerify />} />
+          <Route path="/reset/:id/:token" element={<ForgotPassword />} />
+          <Route path="/virtualassistant" element={<VirtualAssistance />} />
         </Routes>
       </BrowserRouter>
     </>
