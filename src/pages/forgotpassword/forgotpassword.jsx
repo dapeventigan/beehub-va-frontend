@@ -24,37 +24,25 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    if (param.id && param.token) {
-      setUserID(param.id);
-      console.log("Fetching data...");
-      const fetchData = async () => {
-        try {
-          const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
-          console.log("Request URL:", url);
-          const response = await Axios.get(url);
-          setDataValue(response)
-        } catch (error) {
-          console.error("Fetch Error:", error);
+    setUserID(param.id);
+    console.log("Fetching data...");
+    Axios.get(
+      `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`
+    )
+      .then((response) => {
+        if (response.data.message === "nah") {
           setValidUrl(false);
+          console.log("Invalid URL" + response);
+        } else {
+          setValidUrl(true);
+          console.log("Valid URL" + response);
         }
-      };
-      fetchData();
-
-      console.log("Entire Response:", dataValue);
-  
-      console.log("Response Data:", dataValue.data);
-
-      if (dataValue.data.message === "nah") {
+      })
+      .catch((error) => {
+        console.error("Fetch Error:", error);
         setValidUrl(false);
-        console.log("Invalid URL");
-      } else {
-        setValidUrl(true);
-        console.log("Valid URL");
-      }
-
-    }
-  }, [param.id, param.token]);
-  
+      });
+  }, [param]);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
