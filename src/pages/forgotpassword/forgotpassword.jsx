@@ -7,7 +7,6 @@ import { FaArrowLeft } from "react-icons/fa";
 import "./forgotpassword.css";
 
 const ForgotPassword = () => {
-  window.location.reload();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userID, setUserID] = useState("");
@@ -17,7 +16,6 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   console.log("URL STATUS: " + validUrl);
 
-
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -26,22 +24,35 @@ const ForgotPassword = () => {
   useEffect(() => {
     setUserID(param.id);
     console.log("Fetching data...");
-    Axios.get(
-      `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`
-    )
-      .then((response) => {
-        if (response.data.message === "nah") {
+    const fetchData = async () => {
+      try {
+        const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
+        console.log("Request URL:", url);
+
+        const response = await Axios.get(url);
+        console.log("Entire Response:", response);
+
+        try {
+          const responseData = response.data;
+          console.log("Response Data:", responseData);
+          if (responseData.message === "nah") {
+            setValidUrl(false);
+            console.log("Invalid URL");
+          } else {
+            setValidUrl(true);
+            console.log("Valid URL");
+          }
+        } catch (error) {
+          console.error("Fetch Error:", error);
           setValidUrl(false);
-          console.log("Invalid URL" + response);
-        } else {
-          setValidUrl(true);
-          console.log("Valid URL" + response);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Fetch Error:", error);
         setValidUrl(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [param]);
 
   const handleResetPassword = async (e) => {
