@@ -29,23 +29,18 @@ const ForgotPassword = () => {
       try {
         const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
         console.log("Request URL:", url);
-
+        console.log("Entire Response:", response);
         const response = await Axios.get(url);
         console.log("Entire Response:", response);
 
-        try {
-          const responseData = response.data;
-          console.log("Response Data:", responseData);
-          if (responseData.message === "nah") {
-            setValidUrl(false);
-            console.log("Invalid URL");
-          } else {
-            setValidUrl(true);
-            console.log("Valid URL");
-          }
-        } catch (error) {
-          console.error("Fetch Error:", error);
+        const responseData = response.data;
+        console.log("Response Data:", responseData);
+        if (responseData.message === "nah") {
           setValidUrl(false);
+          console.log("Invalid URL");
+        } else {
+          setValidUrl(true);
+          console.log("Valid URL");
         }
       } catch (error) {
         console.error("Fetch Error:", error);
@@ -54,7 +49,7 @@ const ForgotPassword = () => {
     };
 
     fetchData();
-  }, []);
+  }, [param.id, param.token]);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
