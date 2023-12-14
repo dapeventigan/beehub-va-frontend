@@ -20,7 +20,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename="/app">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/applyregister" element={<ApplyRegister />} />
@@ -32,7 +32,7 @@ function App() {
           <Route path="/resetpasswordverify" element={<CheckEmail />} />
           <Route path="/verify/:id/:token" element={<EmailVerify/>}/>
           <Route path="/reset/:id/:token" element={<ForgotPassword/>}/>
-          <Route path="/virtual-assistant" element={<VirtualAssistance/>}/>
+          <Route path="/virtualassistant" element={<VirtualAssistance/>}/>
         </Routes>
       </BrowserRouter>
     </>

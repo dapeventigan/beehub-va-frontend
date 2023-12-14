@@ -12,7 +12,7 @@ export const links = [
 
     {
         name: "Virtual Assistant",
-        path: '/virtual-assistant'
+        path: '/virtualassistant'
     },
     {
         name: "Contact Us",
