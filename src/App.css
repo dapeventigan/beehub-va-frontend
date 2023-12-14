@@ -141,6 +141,11 @@ img {
   margin-right: 5px;
 }
 
+main{
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
 @media screen and (max-width: 768px) {
   .goback__button {
     font-size: 14px;

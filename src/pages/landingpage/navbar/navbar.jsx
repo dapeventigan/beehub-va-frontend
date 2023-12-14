@@ -68,15 +68,26 @@ const NavbarHome = () => {
           </div>
           <div className="navbar__link">
             <ul className="navbar__links">
-              {links.map(({ name, path }, index) => {
-                return (
-                  <li key={index}>
-                    <a className="link__details" href={path}>
-                      {name}
-                    </a>
-                  </li>
-                );
-              })}
+              <li>
+                <a href="#" className="link__details">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#about" className="link__details">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <Link  to="/virtualassistant" className="link__details">
+                  Virtual Assistant
+                </Link >
+              </li>
+              <li>
+                <a href="#contact" className="link__details">
+                  Contact Us
+                </a>
+              </li>
             </ul>
           </div>
 
