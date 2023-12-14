@@ -24,7 +24,7 @@ const ApplyHome = () => {
     e.preventDefault();
 
     try {
-      Cookies.remove("token");
+      Cookies.remove("token", { secure: true, sameSite: 'None', domain: 'https://beehubvas.com', path: '/applyhome' });
       // window.location.reload();
       setUserDetails(null);
       navigate("/");
