@@ -22,31 +22,34 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    setUserID(param.id);
-    console.log("Work 1");
-    const fetchData = async () => {
-      console.log("Work 2");
-      try {
-        const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
-        const response = await Axios.get(url);
-        console.log(response.data); // Logging the actual data received
-        console.log("Work 3");
-        if (response.data.message === "nah") {
+    if (param.id && param.token) {
+      setUserID(param.id);
+      console.log("Fetching data...");
+      const fetchData = async () => {
+        try {
+          const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
+          console.log("Request URL:", url);
+          const response = await Axios.get(url);
+          console.log("Entire Response:", response);
+  
+          console.log("Response Data:", response.data);
+  
+          if (response.data.message === "Link expired or Invalid token. Please try again by logging in.") {
+            setValidUrl(false);
+            console.log("Invalid URL");
+          } else {
+            setValidUrl(true);
+            console.log("Valid URL");
+          }
+        } catch (error) {
+          console.error("Fetch Error:", error);
           setValidUrl(false);
-          console.log("No Work 1");
-        } else {
-          setValidUrl(true);
-          console.log("Work 4");
         }
-      } catch (error) {
-        console.log(error);
-        setValidUrl(false);
-        console.log("No Work 2");
-      }
-    };
-    console.log("Work Work");
-    fetchData();
-  }, [param]);
+      };
+      fetchData();
+    }
+  }, [param.id, param.token]);
+  
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
