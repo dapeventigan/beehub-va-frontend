@@ -24,7 +24,8 @@ function App() {
         <Routes>
           <Route index element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
-          <Route path="/applyregister" element={<ApplyRegister />} />
+          {/* <Route path="/applyregister" element={<ApplyRegister />} /> */}
+          <Route path="/applyregister" element={<VirtualAssistance />} />
           <Route path="/joinregister" element={<JoinRegister />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admindashboard" element={<Dashboard />} />
@@ -34,6 +35,7 @@ function App() {
           <Route path="/verify/:id/:token" element={<EmailVerify />} />
           <Route path="/reset/:id/:token" element={<ForgotPassword />} />
           <Route path="/virtualassistant" element={<VirtualAssistance />} />
+          <Route path="*" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
     </>
