@@ -9,7 +9,9 @@ const ApplyHome = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/applyuserdashboard").then((res) => {
+    Axios.get(
+      "https://dape-beehub-va-api.onrender.com/applyuserdashboard"
+    ).then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
       } else {
@@ -21,9 +23,14 @@ const ApplyHome = () => {
   const handleLogout = (e) => {
     e.preventDefault();
 
-    Cookies.remove("token");
-    window.location.reload();
-    navigate("/");
+    try {
+      Cookies.remove("token");
+      window.location.reload();
+      setUserDetails(null);
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
