@@ -12,9 +12,11 @@ const ForgotPassword = () => {
   const [userID, setUserID] = useState("");
   const [message, setMessage] = useState("");
   const [validUrl, setValidUrl] = useState(false);
+  const [resetData, setResetData] = useState([]);
   const param = useParams();
   const navigate = useNavigate();
   console.log("URL STATUS: " + validUrl);
+  console.log("Set Data: " + resetData);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -28,12 +30,12 @@ const ForgotPassword = () => {
         const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
         const data = await Axios.get(url);
         console.log(data);
-        if(data.data.message === "nah"){
+        setResetData(data);
+        if (resetData.data.message === "nah") {
           setValidUrl(false);
-        }else{
+        } else {
           setValidUrl(true);
         }
-
       } catch (error) {
         console.log(error);
         setValidUrl(false);
@@ -68,9 +70,13 @@ const ForgotPassword = () => {
 
         formData.append("password", newPassword);
         formData.append("userID", userID);
-        await Axios.post("https://dape-beehub-va-api.onrender.com/resetPassword", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        }).then(navigate("/login"));
+        await Axios.post(
+          "https://dape-beehub-va-api.onrender.com/resetPassword",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        ).then(navigate("/login"));
       } catch (error) {
         setMessage(error.message);
       }

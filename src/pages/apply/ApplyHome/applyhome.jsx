@@ -25,8 +25,9 @@ const ApplyHome = () => {
 
     try {
       Cookies.remove("token");
-      window.location.reload();
+      // window.location.reload();
       setUserDetails(null);
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
