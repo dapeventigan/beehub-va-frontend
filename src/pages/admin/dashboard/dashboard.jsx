@@ -45,37 +45,45 @@ const Dashboard = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/admindashboard").then((res) => {
-      if (res.data !== "User not found") {
-        setUserDetails(res.data);
-      } else {
-        navigate("/");
+    Axios.get("https://dape-beehub-va-api.onrender.com/admindashboard").then(
+      (res) => {
+        if (res.data !== "User not found") {
+          setUserDetails(res.data);
+        } else {
+          navigate("/");
+        }
       }
-    });
+    );
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getApplyUsers").then((res) => {
-      try {
-        setApplyUsers(res.data);
-      } catch (error) {
-        console.log(error);
+    Axios.get("https://dape-beehub-va-api.onrender.com/getApplyUsers").then(
+      (res) => {
+        try {
+          setApplyUsers(res.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    });
+    );
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getJoinUsers").then((res) => {
-      try {
-        setJoinUsers(res.data);
-      } catch (error) {
-        console.log(error);
+    Axios.get("https://dape-beehub-va-api.onrender.com/getJoinUsers").then(
+      (res) => {
+        try {
+          setJoinUsers(res.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    });
+    );
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getArchiveUsers").then((res) => {
-      try {
-        setArchiveUsers(res.data);
-      } catch (error) {
-        console.log(error);
+    Axios.get("https://dape-beehub-va-api.onrender.com/getArchiveUsers").then(
+      (res) => {
+        try {
+          setArchiveUsers(res.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    });
+    );
   }, [navigate]);
 
   const applycolumns = [
@@ -160,11 +168,16 @@ const Dashboard = () => {
     },
   ];
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
 
-    Cookies.remove("token");
-    navigate("/");
+    try {
+      await Axios.post("https://dape-beehub-va-api.onrender.com/logout");
+
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (
@@ -225,15 +238,19 @@ const Dashboard = () => {
           <div className="datatable__container">
             <h1>Archive Users</h1>
             <div className="table__container">
-              <DataTable columns={arhivedcolumns} data={archiveUsers} theme="dape" />
+              <DataTable
+                columns={arhivedcolumns}
+                data={archiveUsers}
+                theme="dape"
+              />
             </div>
           </div>
         </div>
       </div>
 
       <div className="sticky__button">
-      <a href="https://m.me/trashdape" target="_blank" rel="noreferrer">
-        <img src={vaLogo} alt="" />
+        <a href="https://m.me/trashdape" target="_blank" rel="noreferrer">
+          <img src={vaLogo} alt="" />
         </a>
       </div>
     </div>
