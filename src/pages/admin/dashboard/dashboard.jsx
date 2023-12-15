@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import Cookies from "js-cookie";
 import DataTable, { createTheme } from "react-data-table-component";
 import vaLogo from "../../../assets/navlogo.png";
 import { FaArrowLeft } from "react-icons/fa";
@@ -45,45 +44,37 @@ const Dashboard = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/admindashboard").then(
-      (res) => {
-        if (res.data !== "User not found") {
-          setUserDetails(res.data);
-        } else {
-          navigate("/");
-        }
+    Axios.get("https://dape-beehub-va-api.onrender.com/admindashboard").then((res) => {
+      if (res.data !== "User not found") {
+        setUserDetails(res.data);
+      } else {
+        navigate("/");
       }
-    );
+    });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getApplyUsers").then(
-      (res) => {
-        try {
-          setApplyUsers(res.data);
-        } catch (error) {
-          console.log(error);
-        }
+    Axios.get("https://dape-beehub-va-api.onrender.com/getApplyUsers").then((res) => {
+      try {
+        setApplyUsers(res.data);
+      } catch (error) {
+        console.log(error);
       }
-    );
+    });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getJoinUsers").then(
-      (res) => {
-        try {
-          setJoinUsers(res.data);
-        } catch (error) {
-          console.log(error);
-        }
+    Axios.get("https://dape-beehub-va-api.onrender.com/getJoinUsers").then((res) => {
+      try {
+        setJoinUsers(res.data);
+      } catch (error) {
+        console.log(error);
       }
-    );
+    });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getArchiveUsers").then(
-      (res) => {
-        try {
-          setArchiveUsers(res.data);
-        } catch (error) {
-          console.log(error);
-        }
+    Axios.get("https://dape-beehub-va-api.onrender.com/getArchiveUsers").then((res) => {
+      try {
+        setArchiveUsers(res.data);
+      } catch (error) {
+        console.log(error);
       }
-    );
+    });
   }, [navigate]);
 
   const applycolumns = [
@@ -172,9 +163,7 @@ const Dashboard = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("https://dape-beehub-va-api.onrender.com/logout");
-
-      navigate("/");
+      await Axios.post("https://dape-beehub-va-api.onrender.com/logout").then(navigate("/"));
     } catch (error) {
       console.error("Logout error:", error);
     }

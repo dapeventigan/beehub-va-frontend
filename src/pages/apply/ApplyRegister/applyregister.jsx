@@ -88,7 +88,6 @@ const ApplyRegister = () => {
           },
         });
 
-        console.log("Response:", response.data);
         const parsedName = response.data.name.split(" ");
         setFname(parsedName[0] || ""); // First name
         const middleName = parsedName.slice(2, -1).join(" ");

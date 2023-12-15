@@ -8,7 +8,6 @@ const EmailVerify = () => {
   const [validUrl, setValidUrl] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const param = useParams();
-  console.log(validUrl);
 
   useEffect(() => {
     const verifyEmailUrl = async () => {

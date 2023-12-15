@@ -37,8 +37,6 @@ export default function ContactUser({ userID }) {
     handleClose();
   };
 
-  console.log(errorMsg);
-
   const handleSendEmail = async (e) => {
     e.preventDefault();
     handleClose();

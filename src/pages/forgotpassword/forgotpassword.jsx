@@ -14,34 +14,24 @@ const ForgotPassword = () => {
   const [validUrl, setValidUrl] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
-  console.log("URL STATUS: " + validUrl);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-
-
   useEffect(() => {
     setUserID(param.id);
-    console.log("Fetching data...");
     const fetchData = async () => {
       try {
         const url = `https://dape-beehub-va-api.onrender.com/reset/${param.id}/${param.token}`;
-        console.log("Request URL:", url);
-        console.log("Entire Response:", response);
         const response = await Axios.get(url);
-        console.log("Entire Response:", response);
 
         const responseData = response.data;
-        console.log("Response Data:", responseData);
         if (responseData.message === "nah") {
           setValidUrl(false);
-          console.log("Invalid URL");
         } else {
           setValidUrl(true);
-          console.log("Valid URL");
         }
       } catch (error) {
         console.error("Fetch Error:", error);
@@ -77,13 +67,9 @@ const ForgotPassword = () => {
 
         formData.append("password", newPassword);
         formData.append("userID", userID);
-        await Axios.post(
-          "https://dape-beehub-va-api.onrender.com/resetPassword",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        ).then(navigate("/login"));
+        await Axios.post("https://dape-beehub-va-api.onrender.com/resetPassword", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        }).then(navigate("/login"));
       } catch (error) {
         setMessage(error.message);
       }
