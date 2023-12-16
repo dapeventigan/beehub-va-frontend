@@ -28,13 +28,10 @@ const Login = () => {
       }).then(async (res) => {
         if (res.data.status === "ok") {
           if (res.data.role === "admin") {
-            document.cookie = `token=${res.data.token}; Domain=dape-beehub-va-api.onrender.com; Path=/; Expires=Wed, 01 Jan 2023 00:00:00 GMT; SameSite=Lax;`;
             navigate("/admindashboard");
           } else if (res.data.role === "applyUser") {
-            document.cookie = `token=${res.data.token}; Domain=dape-beehub-va-api.onrender.com; Path=/; Expires=Wed, 01 Jan 2023 00:00:00 GMT; SameSite=Lax;`;
             navigate("/applyhome");
           } else {
-            document.cookie = `token=${res.data.token}; Domain=dape-beehub-va-api.onrender.com; Path=/; Expires=Wed, 01 Jan 2023 00:00:00 GMT; SameSite=Lax;`;
             navigate("/joinhome");
           }
         } else {
