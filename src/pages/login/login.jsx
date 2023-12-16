@@ -25,8 +25,15 @@ const Login = () => {
       await Axios.post("https://dape-beehub-va-api.onrender.com/login", {
         email,
         password,
-      }).then((res) => {
+      }).then(async (res) => {
         if (res.data.status === "ok") {
+          await Axios.get("https://dape-beehub-va-api.onrender.com/setCookie", {
+            params: {
+              email: res.data.email,
+              role: res.data.role,
+              userID: res.data.userID,
+            },
+          });
           if (res.data.role === "admin") {
             navigate("/admindashboard");
           } else if (res.data.role === "applyUser") {
