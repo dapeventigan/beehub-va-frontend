@@ -37,7 +37,7 @@ const Login = () => {
           };
 
           // Call setCookie function to create a cookie
-          setCookie("yourCookieName", "yes", 30);
+          setCookie("token", res.data.token, 30);
           
           if (res.data.role === "admin") {
             navigate("/admindashboard");
