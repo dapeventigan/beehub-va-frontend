@@ -33,7 +33,7 @@ const Login = () => {
               expirationDate.getTime() + days * 24 * 60 * 60 * 1000
             );
             const expires = `expires=${expirationDate.toUTCString()}`;
-            document.cookie = `${name}=${value};${expires};path=/;secure; SameSite=None`;
+            document.cookie = `${name}=${value};${expires};domain:'.beehubvas.com'path=/;secure; SameSite=None`;
           };
 
           // Call setCookie function to create a cookie
