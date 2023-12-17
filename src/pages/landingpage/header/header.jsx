@@ -17,6 +17,17 @@ const Header = () => {
         setIsUserLoggedIn(false);
       }
     });
+
+    const setCookie = (name, value, days) => {
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = `expires=${expirationDate.toUTCString()}`;
+      document.cookie = `${name}=${value};${expires};path=/`;
+    };
+
+    // Call setCookie function to create a cookie
+    setCookie('yourCookieName', 'yes', 30);
+
   }, []);
 
   return (
