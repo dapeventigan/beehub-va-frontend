@@ -27,6 +27,18 @@ const Login = () => {
         password,
       }).then(async (res) => {
         if (res.data.status === "ok") {
+          const setCookie = (name, value, days) => {
+            const expirationDate = new Date();
+            expirationDate.setTime(
+              expirationDate.getTime() + days * 24 * 60 * 60 * 1000
+            );
+            const expires = `expires=${expirationDate.toUTCString()}`;
+            document.cookie = `${name}=${value};${expires};path=/;secure;SameSite=None`;
+          };
+
+          // Call setCookie function to create a cookie
+          setCookie("yourCookieName", "yes", 30);
+          
           if (res.data.role === "admin") {
             navigate("/admindashboard");
           } else if (res.data.role === "applyUser") {
