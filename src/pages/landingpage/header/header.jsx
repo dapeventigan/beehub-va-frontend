@@ -8,14 +8,14 @@ import HeaderLogo from "../../../assets/header_logo.json";
 const Header = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  Axios.defaults.withCredentials = true;
   useEffect(() => {
+    Axios.defaults.withCredentials = true;
     Axios.get("https://dape-beehub-va-api.onrender.com/getCookieData", {
       withCredentials: true,
     }).then((res) => {
-      console.log('Server response:', res.data);
+      console.log("Server response:", res.data);
       console.log("dasdasd yes 1");
-      
+
       // if (res.data !== "User not found") {
       //   setIsUserLoggedIn(true);
       //   console.log("dasdasd yes 2");
