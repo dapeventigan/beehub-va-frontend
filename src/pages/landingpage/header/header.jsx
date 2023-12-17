@@ -14,7 +14,6 @@ const Header = () => {
       withCredentials: true,
     }).then((res) => {
       console.log("Server response:", res.data);
-      console.log("dasdasd yes 1");
 
       // if (res.data !== "User not found") {
       //   setIsUserLoggedIn(true);
@@ -24,8 +23,6 @@ const Header = () => {
       //   console.log("dasdasd naur");
       // }
     });
-
-    console.log("dasdasd yes");
   }, []);
 
   return (
