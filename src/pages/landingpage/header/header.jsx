@@ -13,7 +13,7 @@ const Header = () => {
     Axios.get("https://dape-beehub-va-api.onrender.com/getCookieData", {
       withCredentials: true,
     }).then((res) => {
-      console.log('Server response:', response.data);
+      console.log('Server response:', res.data);
       console.log("dasdasd yes 1");
       
       // if (res.data !== "User not found") {
