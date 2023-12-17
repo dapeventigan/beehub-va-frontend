@@ -10,22 +10,19 @@ const Header = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/verifylogin", {
+    Axios.get("https://dape-beehub-va-api.onrender.com/getCookieData", {
       withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     }).then((res) => {
-
+      console.log('Server response:', response.data);
       console.log("dasdasd yes 1");
       
-      if (res.data !== "User not found") {
-        setIsUserLoggedIn(true);
-        console.log("dasdasd yes 2");
-      } else {
-        setIsUserLoggedIn(false);
-        console.log("dasdasd naur");
-      }
+      // if (res.data !== "User not found") {
+      //   setIsUserLoggedIn(true);
+      //   console.log("dasdasd yes 2");
+      // } else {
+      //   setIsUserLoggedIn(false);
+      //   console.log("dasdasd naur");
+      // }
     });
 
     console.log("dasdasd yes");
