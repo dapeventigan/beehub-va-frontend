@@ -12,13 +12,23 @@ const Header = () => {
   useEffect(() => {
     Axios.get("https://dape-beehub-va-api.onrender.com/verifylogin", {
       withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then((res) => {
+
+      console.log("dasdasd yes 1");
+      
       if (res.data !== "User not found") {
         setIsUserLoggedIn(true);
+        console.log("dasdasd yes 2");
       } else {
         setIsUserLoggedIn(false);
+        console.log("dasdasd naur");
       }
     });
+
+    console.log("dasdasd yes");
   }, []);
 
   return (
