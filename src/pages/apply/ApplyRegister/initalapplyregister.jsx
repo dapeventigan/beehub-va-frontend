@@ -13,9 +13,14 @@ import io from "socket.io-client";
 
 import "react-phone-input-2/lib/style.css";
 import "./applyregister.css";
-const socket = io.connect("https://dape-beehub-va-api.onrender.com");
+// const socket = io.connect("https://dape-beehub-va-api.onrender.com");
+  //socket cors
+  const socket = io("https://dape-beehub-va-api.onrender.com", {
+    withCredentials: true,
+  });
 
 const InitalApplyRegister = () => {
+
   const navigate = useNavigate();
   // VALUES
   const [fname, setFname] = useState("");
