@@ -9,9 +9,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-
+import io from "socket.io-client";
 
 import "react-phone-input-2/lib/style.css";
+const socket = io.connect("https://dape-beehub-va-api.onrender.com");
 
 const InitalJoinRegister = () => {
   const navigate = useNavigate();
@@ -88,6 +89,9 @@ const InitalJoinRegister = () => {
       if (res.data.message === "Email Already Exist!") {
         setIsErrorSubmitLoading(true);
       } else {
+        socket.emit("new_user", {
+          message: `${fname} is joining using ${email}.`,
+        });
         setIsSubmitLoading(true);
       }
     });
@@ -113,7 +117,6 @@ const InitalJoinRegister = () => {
     },
   };
 
-
   return (
     <div className="applyregister__container">
       {isLoading ? (
@@ -135,7 +138,9 @@ const InitalJoinRegister = () => {
       >
         <Box sx={boxStyle} className="box__container">
           <div className="submit__container">
-            <h1>Thank you for joining the BeeHub Virtual Assistant Co. Experience!</h1>
+            <h1>
+              Thank you for joining the BeeHub Virtual Assistant Co. Experience!
+            </h1>
             <p>We have sent an email. Kindly check your inbox!</p>
             <p>If you can't see our email, check your spam folder.</p>
             <p>Thank you!</p>
@@ -161,8 +166,9 @@ const InitalJoinRegister = () => {
               contacted by the BeeHub Team.
             </p>
             <p>
-              If you want to look for another virtual assistant or if you have any concerns, you can email
-              us at <strong>beehubvirtualassistant@gmail.com</strong>. Thank you!
+              If you want to look for another virtual assistant or if you have
+              any concerns, you can email us at{" "}
+              <strong>beehubvirtualassistant@gmail.com</strong>. Thank you!
             </p>
             <Button sx={buttonStyle} onClick={handleErrorClose}>
               Go back

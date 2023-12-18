@@ -4,10 +4,13 @@ import Axios from "axios";
 import DataTable, { createTheme } from "react-data-table-component";
 import vaLogo from "../../../assets/navlogo.png";
 import { FaArrowLeft } from "react-icons/fa";
+import io from "socket.io-client";
 
 import ContactUser from "./contactuser/contactuser";
 import ViewPdf from "./viewpdf";
 import "./dashboard.css";
+
+const socket = io.connect("https://dape-beehub-va-api.onrender.com");
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -44,6 +47,10 @@ const Dashboard = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
+    socket.on("senduser_admin", (data) => {
+      window.location.reload();
+    });
+
     Axios.get("https://dape-beehub-va-api.onrender.com/admindashboard").then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
@@ -75,7 +82,7 @@ const Dashboard = () => {
         console.log(error);
       }
     });
-  }, [navigate]);
+  }, [navigate, socket]);
 
   const applycolumns = [
     {

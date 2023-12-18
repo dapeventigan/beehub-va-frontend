@@ -24,8 +24,8 @@ const Contact = () => {
           <div className="contact__details">
             <div className="contact__info">
               <ImLocation className="contact__icon" />
-              <h3>Address: </h3>
-              <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+              <h3>Address:</h3>
+              <h4>Baguio City </h4>
             </div>
             <div className="contact__info">
               <FaPhoneAlt className="contact__icon" />
@@ -34,8 +34,8 @@ const Contact = () => {
             </div>
             <div className="contact__info">
               <GrMail className="contact__icon" />
-              <h3>Email: </h3>
-              <h4>sample.email@gmail.com </h4>
+              <h3>Email:</h3>
+              <h4>beehubvirtualassistant@gmail.com </h4>
             </div>
 
             <div className="contact__button">

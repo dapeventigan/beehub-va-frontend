@@ -9,9 +9,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+import io from "socket.io-client";
 
 import "react-phone-input-2/lib/style.css";
 import "./applyregister.css";
+const socket = io.connect("https://dape-beehub-va-api.onrender.com");
 
 const InitalApplyRegister = () => {
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ const InitalApplyRegister = () => {
   const [zipCode, setZipCode] = useState("");
   const [email, setEmail] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
+  const [skills, setSkills] = useState([]);
 
   //MOBILE NUMBER
 
@@ -97,6 +100,7 @@ const InitalApplyRegister = () => {
 
         setIsLoading(false);
 
+        setSkills(response.data.skills);
         const parsedName = response.data.name.split(" ");
         setFname(parsedName[0] || ""); // First name
         const middleName = parsedName.slice(2, -1).join(" ");
@@ -132,6 +136,7 @@ const InitalApplyRegister = () => {
     formData.append("stateName", stateName);
     formData.append("zipCode", zipCode);
     formData.append("email", email);
+    formData.append("skills", skills);
     formData.append("selectedValues", selectedValues);
     setIsLoading(true);
     await Axios.post("https://dape-beehub-va-api.onrender.com/applyRegister", formData, {
@@ -141,6 +146,9 @@ const InitalApplyRegister = () => {
       if (res.data.message === "Email Already Exist!") {
         setIsErrorSubmitLoading(true);
       } else {
+        socket.emit("new_user", {
+          message: `${fname} is applying using ${email}.`,
+        });
         setIsSubmitLoading(true);
       }
     });
@@ -348,6 +356,7 @@ const InitalApplyRegister = () => {
                     placeholder="Enter City"
                     name="cityname"
                     onChange={(e) => setCityName(e.target.value)}
+                    required
                   />
                 </div>
 
