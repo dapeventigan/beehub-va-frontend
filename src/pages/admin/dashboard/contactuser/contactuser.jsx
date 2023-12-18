@@ -40,7 +40,6 @@ export default function ContactUser({ userID }) {
   const handleSendEmail = async (e) => {
     e.preventDefault();
     handleClose();
-    window.location.reload();
 
     try {
       await Axios.post("https://dape-beehub-va-api.onrender.com/contactMessage", {
