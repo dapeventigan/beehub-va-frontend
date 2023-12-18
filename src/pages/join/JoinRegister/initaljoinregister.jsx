@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import { FaArrowLeft } from "react-icons/fa";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 import "react-phone-input-2/lib/style.css";
-import "./applyregister.css";
 
-const ApplyRegister = () => {
+const InitalJoinRegister = () => {
   const navigate = useNavigate();
   // VALUES
   const [fname, setFname] = useState("");
@@ -21,13 +25,7 @@ const ApplyRegister = () => {
   const [stateName, setStateName] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [email, setEmail] = useState("");
-  // const [confirmEmail, setConfirmEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
-
-  //VALIDATE VALUES
-  const [messageEmail, setMessageEmail] = useState("");
-  const [messagePass, setMessagePass] = useState("");
 
   //MOBILE NUMBER
 
@@ -35,18 +33,26 @@ const ApplyRegister = () => {
     setMobileNumber(value);
   };
 
-  //PASSWORD
-  // const [showPassword, setShowPassword] = useState(false);
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
-
   // CHECKBOX
   const options = [
     { label: "Data Entry", value: "Data Entry" },
     { label: "Video Editing", value: "Video Editing" },
     { label: "Appointment Setter", value: "Appointment Setter" },
   ];
+
+  //Loading spinner
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSumbitLoading, setIsSubmitLoading] = useState(false);
+  const [isErrorSumbitLoading, setIsErrorSubmitLoading] = useState(false);
+  const handleClose = () => {
+    setIsSubmitLoading(false);
+    navigate("/");
+  };
+
+  const handleErrorClose = () => {
+    setIsErrorSubmitLoading(false);
+    window.location.reload();
+  };
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
@@ -58,103 +64,113 @@ const ApplyRegister = () => {
     }
   };
 
-  //RESUME PARSER VALUES
-  const apiUrl = "https://api.apilayer.com/resume_parser/upload";
-  const apiKey = "kGkRkLNdq7343NZwxNk1kdOKlc7RNMEf";
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
-
-  //RESUME PARSER
-  useEffect(() => {
-    const uploadResume = async () => {
-      try {
-        if (!selectedFile) {
-          console.error("Please select a file.");
-          return;
-        }
-
-        const fileData = await Axios.get(URL.createObjectURL(selectedFile), {
-          responseType: "arraybuffer",
-        });
-
-        const response = await Axios.post(apiUrl, fileData.data, {
-          headers: {
-            "Content-Type": "application/octet-stream",
-            apikey: apiKey,
-          },
-        });
-
-        const parsedName = response.data.name.split(" ");
-        setFname(parsedName[0] || ""); // First name
-        const middleName = parsedName.slice(2, -1).join(" ");
-        const middleNameInitial = middleName
-          ? middleName.split(" ").pop().charAt(0) + "."
-          : "";
-        setMname(middleNameInitial); // Middle name initial
-        const lastName = parsedName.slice(-1).join(" ");
-        setLname(lastName); // Last name
-        setStreetAdd(response.data.address || "");
-        setEmail(response.data.email || "");
-      } catch (error) {
-        console.error("Error:", error.message);
-      }
-    };
-
-    uploadResume();
-  }, [apiUrl, apiKey, selectedFile]);
-
   //Submit Button
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //EMAIL AND PASSWORD VALIDATE
-    if (email !== confirmEmail) {
-      setMessageEmail("Email doesn't match. Make sure both email are similar");
-    } else {
-      setMessageEmail("");
-      if (!/[A-Z]/.test(password)) {
-        setMessagePass("Password must contain at least one uppercase letter.");
-      } else if (!/\d/.test(password)) {
-        setMessagePass("Password must contain at least one number.");
-      } else if (!/[!@#$%^&*]/.test(password)) {
-        setMessagePass(
-          "Password must contain at least one special character (!@#$%^&*)."
-        );
-      } else if (password.length < 8) {
-        setMessagePass("Password must be at least 8 characters long.");
+    const formData = new FormData();
+
+    formData.append("fname", fname);
+    formData.append("lname", lname);
+    formData.append("mname", mname);
+    formData.append("mobileNumber", mobileNumber);
+    formData.append("streetAdd", streetAdd);
+    formData.append("cityName", cityName);
+    formData.append("stateName", stateName);
+    formData.append("zipCode", zipCode);
+    formData.append("email", email);
+    formData.append("selectedValues", selectedValues);
+    setIsLoading(true);
+    await Axios.post("https://dape-beehub-va-api.onrender.com/joinRegister", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }).then((res) => {
+      setIsLoading(false);
+      if (res.data.message === "Email Already Exist!") {
+        setIsErrorSubmitLoading(true);
       } else {
-        setMessagePass("");
-
-        const formData = new FormData();
-
-        formData.append("pdfFile", selectedFile);
-        formData.append("fname", fname);
-        formData.append("lname", lname);
-        formData.append("mname", mname);
-        formData.append("mobileNumber", mobileNumber);
-        formData.append("streetAdd", streetAdd);
-        formData.append("cityName", cityName);
-        formData.append("stateName", stateName);
-        formData.append("zipCode", zipCode);
-        formData.append("email", email);
-        // formData.append("password", password);
-        formData.append("selectedValues", selectedValues);
-
-        await Axios.post("https://dape-beehub-va-api.onrender.com/applyRegister", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        navigate("/login");
+        setIsSubmitLoading(true);
       }
-    }
+    });
   };
+
+  const boxStyle = {
+    position: "absolute",
+    width: "100%",
+    maxWidth: "500px",
+    margin: "0 auto",
+    backgroundColor: "white",
+    padding: "20px",
+    maxHeight: "60vh",
+    overflowY: "auto",
+  };
+
+  const buttonStyle = {
+    backgroundColor: "#111111",
+    color: "white",
+    borderRadius: 2,
+    "&:hover": {
+      backgroundColor: "#202020",
+    },
+  };
+
 
   return (
     <div className="applyregister__container">
+      {isLoading ? (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        <></>
+      )}
+
+      <Modal
+        open={isSumbitLoading}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={boxStyle} className="box__container">
+          <div className="submit__container">
+            <h1>Thank you for joining the BeeHub Virtual Assistant Co. Experience!</h1>
+            <p>We have sent an email. Kindly check your inbox!</p>
+            <p>If you can't see our email, check your spam folder.</p>
+            <p>Thank you!</p>
+            <Button sx={buttonStyle} onClick={handleClose}>
+              Go Back to Home Page
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={isErrorSumbitLoading}
+        onClose={handleErrorClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={boxStyle} className="box__container">
+          <div className="submit__container">
+            <h1>You have already joined using this email</h1>
+            <p>
+              You already have submitted a form looking for virtual assistants
+              using <strong>{email}</strong>. Check your email if you have been
+              contacted by the BeeHub Team.
+            </p>
+            <p>
+              If you want to look for another virtual assistant or if you have any concerns, you can email
+              us at <strong>beehubvirtualassistant@gmail.com</strong>. Thank you!
+            </p>
+            <Button sx={buttonStyle} onClick={handleErrorClose}>
+              Go back
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+
       <div className="main__container">
         <div className="goback__container">
           <a href="/">
@@ -168,19 +184,6 @@ const ApplyRegister = () => {
           {/* INFORMATION */}
           <form onSubmit={handleSubmit}>
             <div className="insideform__container">
-              <div className="pdf__container">
-                <h2>Resume</h2>
-                <p>Upload your resume here</p>
-                <div className="resume__container">
-                  <input
-                    type="file"
-                    className="pdf-control"
-                    onChange={handleFileChange}
-                    accept="application/pdf"
-                    required
-                  />
-                </div>
-              </div>
               <h2>Information</h2>
               <div className="merge__container">
                 <div className="input__container">
@@ -191,7 +194,6 @@ const ApplyRegister = () => {
                     className="input__form"
                     type="text"
                     name="fname"
-                    value={fname}
                     onChange={(e) => setFname(e.target.value)}
                     required
                   />
@@ -204,7 +206,7 @@ const ApplyRegister = () => {
                   <input
                     className="input__form"
                     type="text"
-                    value={lname}
+                    name="lname"
                     onChange={(e) => setLname(e.target.value)}
                     required
                   />
@@ -217,10 +219,24 @@ const ApplyRegister = () => {
                   <input
                     className="input__form mname"
                     type="text"
-                    value={mname}
+                    name="mname"
                     onChange={(e) => setMname(e.target.value)}
                   />
                 </div>
+              </div>
+
+              <div className="input__container">
+                <label htmlFor="email">
+                  <strong>Email</strong>
+                </label>
+                <input
+                  className="input__form"
+                  type="email"
+                  placeholder="Enter Email"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="input__container">
@@ -252,7 +268,6 @@ const ApplyRegister = () => {
                   placeholder="Enter Street Address"
                   autoComplete="auto"
                   name="streetadd"
-                  value={streetAdd}
                   onChange={(e) => setStreetAdd(e.target.value)}
                   required
                 />
@@ -299,69 +314,9 @@ const ApplyRegister = () => {
                 </div>
               </div>
 
-              {/* ACCOUNT */}
-              <h2>Account</h2>
-
-              <div className="input__container">
-                <label htmlFor="email">
-                  <strong>Email</strong>
-                </label>
-                <input
-                  className="input__form"
-                  type="email"
-                  placeholder="Enter Email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="input__container">
-                <label htmlFor="cfemail">
-                  <strong>Confirm Email</strong>
-                </label>
-                <input
-                  className="input__form"
-                  type="email"
-                  placeholder="Re-enter Email"
-                  autoComplete="off"
-                  name="cfemail"
-                  onChange={(e) => setConfirmEmail(e.target.value)}
-                  required
-                />
-              </div>
-              {messageEmail}
-
-              <div className="input__container">
-                <label htmlFor="password">
-                  <strong>Password</strong>
-                </label>
-                <div className="password__container">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    name="password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className="password-toggle"
-                  >
-                    {showPassword ? (
-                      <AiOutlineEye />
-                    ) : (
-                      <AiOutlineEyeInvisible />
-                    )}
-                  </button>
-                </div>
-                {messagePass}
-              </div>
-
               {/* VA POSITIONS */}
-              <h2>Roles</h2>
+              <h2>Available Virtual Assistants</h2>
+              <p>Assistant you're looking for</p>
               <div className="roles__container">
                 {options.map((option) => (
                   <label key={option.value} htmlFor="checkboxname">
@@ -392,4 +347,4 @@ const ApplyRegister = () => {
   );
 };
 
-export default ApplyRegister;
+export default InitalJoinRegister;

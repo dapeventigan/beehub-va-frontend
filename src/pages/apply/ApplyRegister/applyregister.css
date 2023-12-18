@@ -92,6 +92,22 @@ button {
   margin-right: 10px;
 }
 
+.submit__container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.submit__container > h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.submit__container > Button {
+  margin-top: 2rem;
+}
 @media screen and (max-width: 610px) {
   .applyregister__container {
     display: block;

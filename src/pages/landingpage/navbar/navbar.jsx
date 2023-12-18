@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Menu, MenuItem } from "@mui/material";
-import { useNavigate, Link } from "react-router-dom";
-import Axios from "axios";
+import { Link } from "react-router-dom";
+// import Axios from "axios";
 import vaLogo from "../../../assets/navlogo.png";
 import { FaBars } from "react-icons/fa";
 import { MdOutlineClose } from "react-icons/md";
 import { links } from "../../../assets/data";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 import "./navbar.css";
 
 const NavbarHome = () => {
-  const [userDetails, setUserDetails] = useState(null);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [loginLocation, setLoginLocation] = useState("");
-  const navigate = useNavigate();
+  // const [userDetails, setUserDetails] = useState(null);
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const [loginLocation, setLoginLocation] = useState("");
+  // const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
@@ -24,37 +24,37 @@ const NavbarHome = () => {
     setAnchorEl(null);
   };
 
-  Axios.defaults.withCredentials = true;
-  useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/verifylogin").then((res) => {
-      try {
-        if (res.data !== "User not found") {
-          setUserDetails(res.data);
-          setIsUserLoggedIn(true);
-          if (res.data.role === "admin") {
-            setLoginLocation("/admindashboard");
-          } else if (res.data.role === "applyUser") {
-            setLoginLocation("/applyhome");
-          } else if (res.data.role === "joinUser") {
-            setLoginLocation("/joinhome");
-          } else {
-            Cookies.remove("token");
-            window.location.reload();
-            setLoginLocation("/");
-          }
-        } else {
-          setIsUserLoggedIn(false);
-          navigate("/");
-        }
-      } catch (error) {
-        //TODO: Will add popup error that you've been logged out
-        console.log(error);
-        Cookies.remove("token");
-        window.location.reload();
-        setLoginLocation("/");
-      }
-    });
-  }, [navigate]);
+  // Axios.defaults.withCredentials = true;
+  // useEffect(() => {
+  //   Axios.get("https://dape-beehub-va-api.onrender.com/verifylogin").then((res) => {
+  //     try {
+  //       if (res.data !== "User not found") {
+  //         setUserDetails(res.data);
+  //         setIsUserLoggedIn(true);
+  //         if (res.data.role === "admin") {
+  //           setLoginLocation("/admindashboard");
+  //         } else if (res.data.role === "applyUser") {
+  //           setLoginLocation("/applyhome");
+  //         } else if (res.data.role === "joinUser") {
+  //           setLoginLocation("/joinhome");
+  //         } else {
+  //           Cookies.remove("token");
+  //           window.location.reload();
+  //           setLoginLocation("/");
+  //         }
+  //       } else {
+  //         setIsUserLoggedIn(false);
+  //         navigate("/");
+  //       }
+  //     } catch (error) {
+  //       //TODO: Will add popup error that you've been logged out
+  //       console.log(error);
+  //       Cookies.remove("token");
+  //       window.location.reload();
+  //       setLoginLocation("/");
+  //     }
+  //   });
+  // }, [navigate]);
 
   return (
     <nav>
@@ -68,6 +68,11 @@ const NavbarHome = () => {
           <div className="navbar__link">
             <ul className="navbar__links">
               <li>
+                <Link to="/virtualassistant" className="link__details">
+                  Virtual Assistant
+                </Link>
+              </li>
+              <li>
                 <a href="#" className="link__details">
                   Home
                 </a>
@@ -76,11 +81,6 @@ const NavbarHome = () => {
                 <a href="#about" className="link__details">
                   About Us
                 </a>
-              </li>
-              <li>
-                <Link  to="/virtualassistant" className="link__details">
-                  Virtual Assistant
-                </Link >
               </li>
               <li>
                 <a href="#contact" className="link__details">
@@ -124,7 +124,7 @@ const NavbarHome = () => {
               })}
             </Menu>
           </div>
-          <div className="button__login">
+          {/* <div className="button__login">
             {isUserLoggedIn ? (
               <Link to={loginLocation} className="button btn-login">
                 Coming Soon
@@ -134,7 +134,7 @@ const NavbarHome = () => {
                 Login
               </Link>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

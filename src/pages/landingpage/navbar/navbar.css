@@ -28,7 +28,7 @@ nav {
 
 .navbar__link {
   margin-left: 2rem;
-  flex-grow: 8;
+  flex-grow: 0;
 }
 
 .navbar__links {
