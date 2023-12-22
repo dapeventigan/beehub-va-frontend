@@ -12,7 +12,7 @@ const CheckEmail = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("https://dape-beehub-va-api.onrender.com/getEmail", { email }).then(
+      await Axios.post("https://server.beehubvas.com/getEmail", { email }).then(
         (res) => {
           setErrorMsg(res.data.message);
         }

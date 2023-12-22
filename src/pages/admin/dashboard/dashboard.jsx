@@ -10,8 +10,8 @@ import ContactUser from "./contactuser/contactuser";
 import ViewPdf from "./viewpdf";
 import "./dashboard.css";
 
-// const socket = io.connect("https://dape-beehub-va-api.onrender.com");
-const socket = io("https://dape-beehub-va-api.onrender.com", {
+// const socket = io.connect("https://server.beehubvas.com");
+const socket = io("https://server.beehubvas.com", {
   withCredentials: true,
 });
 
@@ -54,7 +54,7 @@ const Dashboard = () => {
       window.location.reload();
     });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/admindashboard").then((res) => {
+    Axios.get("https://server.beehubvas.com/admindashboard").then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
       } else {
@@ -62,7 +62,7 @@ const Dashboard = () => {
       }
     });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getApplyUsers").then((res) => {
+    Axios.get("https://server.beehubvas.com/getApplyUsers").then((res) => {
       try {
         setApplyUsers(res.data);
       } catch (error) {
@@ -70,7 +70,7 @@ const Dashboard = () => {
       }
     });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getJoinUsers").then((res) => {
+    Axios.get("https://server.beehubvas.com/getJoinUsers").then((res) => {
       try {
         setJoinUsers(res.data);
       } catch (error) {
@@ -78,7 +78,7 @@ const Dashboard = () => {
       }
     });
 
-    Axios.get("https://dape-beehub-va-api.onrender.com/getArchiveUsers").then((res) => {
+    Axios.get("https://server.beehubvas.com/getArchiveUsers").then((res) => {
       try {
         setArchiveUsers(res.data);
       } catch (error) {
@@ -173,7 +173,7 @@ const Dashboard = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("https://dape-beehub-va-api.onrender.com/logout").then(navigate("/"));
+      await Axios.post("https://server.beehubvas.com/logout").then(navigate("/"));
     } catch (error) {
       console.error("Logout error:", error);
     }

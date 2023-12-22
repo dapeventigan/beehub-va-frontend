@@ -17,7 +17,7 @@ const ViewPdf = ({ filename }) => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/viewPDF", {
+    Axios.get("https://server.beehubvas.com/viewPDF", {
       params: { filename: filename },
     })
       .then((response) => {

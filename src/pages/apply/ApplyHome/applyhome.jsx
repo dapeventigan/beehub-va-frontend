@@ -10,7 +10,7 @@ const ApplyHome = () => {
   Axios.defaults.withCredentials = true;
   useEffect(() => {
     Axios.get(
-      "https://dape-beehub-va-api.onrender.com/applyuserdashboard"
+      "https://server.beehubvas.com/applyuserdashboard"
     ).then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);

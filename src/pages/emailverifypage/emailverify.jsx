@@ -12,7 +12,7 @@ const EmailVerify = () => {
   useEffect(() => {
     const verifyEmailUrl = async () => {
       try {
-        const url = `https://dape-beehub-va-api.onrender.com/verify/${param.id}/${param.token}`;
+        const url = `https://server.beehubvas.com/verify/${param.id}/${param.token}`;
         const data = await Axios.get(url);
 
         if (data.data.message === "Link expired or Invalid token. Please try again by logging in.") {

@@ -144,7 +144,7 @@ const ApplyRegister = () => {
         // formData.append("password", password);
         formData.append("selectedValues", selectedValues);
 
-        await Axios.post("https://dape-beehub-va-api.onrender.com/applyRegister", formData, {
+        await Axios.post("https://server.beehubvas.com/applyRegister", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
 

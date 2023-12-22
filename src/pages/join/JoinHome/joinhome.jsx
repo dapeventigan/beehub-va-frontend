@@ -9,7 +9,7 @@ const JoinHome = () => {
 
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get("https://dape-beehub-va-api.onrender.com/joinuserdashboard").then((res) => {
+    Axios.get("https://server.beehubvas.com/joinuserdashboard").then((res) => {
       if (res.data !== "User not found") {
         setUserDetails(res.data);
       } else {
