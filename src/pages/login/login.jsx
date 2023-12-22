@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("https://dape-beehub-va-api.onrender.com/login", {
+      await Axios.post("https://server.beehubvas.com/login", {
         email,
         password,
       }).then(async (res) => {
